@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .banner{
+          background:url('http://www.horisoncopier.com/wp-content/uploads/2015/06/Merinci-Modal-Usaha-Fotocopy-Dan-ATK1.jpg') no-repeat center; 
+          min-height:800px;
+          border-top:10px solid #2094f3;
+          -webkit-background-size:cover;
+          -moz-background-size:cover; 
+          background-size:cover;
+          padding:17em 0 0;
+          text-align:center;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="banner">      
+      <h2>E-KOPI</h2>
+      <p>Memudahkan anda dalam mencari fotokopi</p>
+    </div>
+
+    <div id="map" class="container"></div>
+    <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 15
+        });
+        var infoWindow = new google.maps.InfoWindow({map: map});
+
+        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+        var icons = {
+          parking: {
+            icon: iconBase + 'parking_lot_maps.png'
+          },
+          library: {
+            icon: iconBase + 'library_maps.png'
+          },
+          info: {
+            icon: iconBase + 'info-i_maps.png'
+          }
+        };
+
+
+        var features = [
+          {
+            position: new google.maps.LatLng(-33.91721, 151.22630),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91539, 151.22820),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91747, 151.22912),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91910, 151.22907),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91725, 151.23011),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91872, 151.23089),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91784, 151.23094),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91682, 151.23149),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91790, 151.23463),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91666, 151.23468),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.916988, 151.233640),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(-33.91662347903106, 151.22879464019775),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(-33.916365282092855, 151.22937399734496),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(-33.91665018901448, 151.2282474695587),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(-33.919543720969806, 151.23112279762267),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(-33.91608037421864, 151.23288232673644),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(-33.91851096391805, 151.2344058214569),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(-33.91818154739766, 151.2346203981781),
+            type: 'parking'
+          }, {
+            position: new google.maps.LatLng(-33.91727341958453, 151.23348314155578),
+            type: 'library'
+          }
+        ];
+
+        // Create markers.
+        features.forEach(function(feature) {
+          var marker = new google.maps.Marker({
+            position: feature.position,
+            icon: icons[feature.type].icon,
+            map: map
+          });
+        });
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } 
+        else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key= AIzaSyAS-RGk5g_vZo9PYzAuBB_hXnsdElaeCAc&callback=initMap">
+    </script>
+
+    <div class="container" style="background-color: blue: ">
+      Hello
+    </div>
+  </body>
+</html>
